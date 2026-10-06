@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>TOAST</title>
+<meta name="description" content="Your coins are toast. Find every dead coin in your Solana wallet, burn it, close the account and get the rent back. Free.">
+<meta name="theme-color" content="#2EBE98">
+<meta property="og:type" content="website">
+<meta property="og:title" content="TOAST · Your coins are toast.">
+<meta property="og:description" content="Every dead coin in your wallet is sitting on about 0.002 SOL of your rent. Toast them and get it back. Free.">
+<meta property="og:image" content="/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TOAST · Your coins are toast.">
+<meta name="twitter:description" content="Every dead coin in your wallet is sitting on about 0.002 SOL of your rent. Toast them and get it back. Free.">
+<meta name="twitter:image" content="/img/og.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/icon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="/img/icon-64.png">
+<link rel="apple-touch-icon" href="/img/icon-180.png">
+<link rel="preload" href="/fonts/fredoka.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="/css/toast.css?v=1">
+</head>
+<body>
+<header class="nav" id="nav">
+  <a class="brand" href="#top" aria-label="TOAST home"><img src="/img/icon-64.png" alt="" width="34" height="34"><span>TOAST</span></a>
+  <nav class="links" aria-label="Sections"><a href="#scan">Toast it</a><a href="#how">How it works</a><a href="#faq">FAQ</a></nav>
+  <div class="nav-r"><button class="btn wallet" id="walletBtn" type="button"><i class="dot"></i><span id="walletLabel">Connect wallet</span></button></div>
+</header>
+
+<main id="top">
+  <section class="hero" id="scan">
+    <div class="wrap hero-in">
+      <div class="hero-l">
+        <p class="kicker"><b>Free</b><span>·</span>Solana<span>·</span>your wallet signs</p>
+        <h1>Your coins are <em>toast.</em></h1>
+        <p class="lede">Every dead coin in your wallet is sitting on about <b>0.002&nbsp;SOL</b> of your rent. TOAST finds them, burns the dust, closes the accounts and sends the SOL back to you.</p>
+        <form class="scan" id="scanForm" autocomplete="off">
+          <input id="addr" type="text" inputmode="text" placeholder="Paste any Solana wallet address" spellcheck="false" aria-label="Wallet address">
+          <button class="btn go" id="scanBtn" type="submit"><span>Scan wallet</span></button>
+        </form>
+        <p class="or">or <button type="button" class="link" id="useWallet">scan my connected wallet</button></p>
+        <ul class="trust">
+          <li>No fee, ever</li>
+          <li>Never touches LP tokens or NFTs</li>
+          <li>Every transaction simulated first</li>
+        </ul>
+        <div class="ca" id="caPill" hidden></div>
+      </div>
+      <div class="hero-r" aria-hidden="true">
+        <div class="machine" id="machine">
+          <span class="shadow"></span>
+          <img class="t-toast" src="/img/toast.png" alt="">
+          <img class="t-coin k1" src="/img/coin.png" alt="">
+          <img class="t-coin k2" src="/img/coin.png" alt="">
+          <img class="t-coin k3" src="/img/coin.png" alt="">
+          <img class="t-body" src="/img/toaster.png" alt="">
+          <span class="bubble" id="bubble">0.002 SOL<small>per dead coin</small></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="results" id="results" hidden>
+    <div class="wrap">
+      <div class="sum">
+        <div class="sum-l">
+          <p class="eyebrow" id="sumWho">Wallet</p>
+          <h2><span id="sumSol">0</span> <small>SOL to get back</small></h2>
+          <p class="sum-sub" id="sumSub"></p>
+        </div>
+        <div class="sum-r">
+          <div class="stat"><b id="stDead">0</b><span>dead coins</span></div>
+          <div class="stat"><b id="stEmpty">0</b><span>empty accounts</span></div>
+          <div class="stat"><b id="stKept">0</b><span>kept</span></div>
+        </div>
+      </div>
+      <div class="bar">
+        <div class="seg" id="thr" role="group" aria-label="Dead coin threshold">
+          <span class="seg-l">Burn <span class="hm">coins worth </span>under</span>
+          <button type="button" data-v="0.1">$0.10</button><button type="button" data-v="1" class="on">$1</button><button type="button" data-v="5">$5</button>
+        </div>
+        <div class="bar-r">
+          <button type="button" class="link" id="selAll">Select all</button>
+          <button type="button" class="link" id="selNone">Clear</button>
+          <button type="button" class="link" id="rescan">Scan again</button>
+        </div>
+      </div>
+      <div id="groups"></div>
+    </div>
+    <div class="act" id="act">
+      <div class="act-in">
+        <div class="act-l"><b id="actCount">0 selected</b><span id="actSol">+0 SOL</span></div>
+        <button class="btn go big" id="toastBtn" type="button">Toast them</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="how" id="how">
+    <div class="wrap">
+      <p class="eyebrow light">How it works</p>
+      <h2>Three clicks from graveyard to SOL.</h2>
+      <div class="steps">
+        <div class="step"><span class="n">1</span><h3>Scan</h3><p>Paste any wallet. TOAST reads every token account it holds and checks each coin’s market.</p></div>
+        <div class="step"><span class="n">2</span><h3>Toast</h3><p>Pick what goes. Empty accounts get closed. Dead coins get burned first, then closed.</p></div>
+        <div class="step"><span class="n">3</span><h3>SOL back</h3><p>Every closed account returns its rent deposit, about 0.002 SOL, straight to your wallet.</p></div>
+      </div>
+      <div class="rules">
+        <div><b>Your wallet signs.</b> TOAST builds each transaction, simulates it on Solana first, and your wallet signs it. It never holds your keys or your coins.</div>
+        <div><b>Hands off what matters.</b> Only pump.fun and bonk coins can be burned. LP tokens, NFTs and anything worth more than $25 are never touched.</div>
+        <div><b>Burning is permanent.</b> Untick any coin you still believe in before you toast.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq" id="faq">
+    <div class="wrap faq-in">
+      <div class="faq-h"><p class="eyebrow">FAQ</p><h2>Questions about toasting.</h2><img src="/img/toast.png" alt="" class="faq-toast"></div>
+      <div class="qs">
+        <details><summary>What is the SOL I get back?</summary><p>Solana charges a refundable deposit, called rent, for every token account. That is about 0.00204 SOL for each coin you have ever held. Close the account and the deposit comes back to you.</p></details>
+        <details><summary>Does TOAST take a fee?</summary><p>No. You only pay the normal Solana network fee, a fraction of a cent for each transaction.</p></details>
+        <details><summary>Is it safe?</summary><p>Your wallet signs every transaction and you can check each one before you sign. TOAST only burns pump.fun and bonk coins, never LP tokens or NFTs, and refuses anything worth more than $25.</p></details>
+        <details><summary>What if a dead coin comes back?</summary><p>Burning is permanent. Untick anything you still believe in before you toast.</p></details>
+        <details><summary>Why does my wallet need a little SOL?</summary><p>The network fee is paid before the rent comes back, so the wallet needs about 0.0001 SOL to start.</p></details>
+        <details><summary>Which wallets work?</summary><p>Phantom, Solflare, Backpack and any wallet that supports Wallet Standard. On a phone, open this site inside your wallet’s browser.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot"><div class="wrap foot-in"><span class="brand sm"><img src="/img/icon-32.png" alt="" width="22" height="22">TOAST</span><span>Your coins are toast.</span><span id="footX"></span></div></footer>
+
+<div class="modal" id="wModal" hidden><div class="mbox" role="dialog" aria-modal="true" aria-labelledby="wTitle"><button class="x" id="wClose" type="button" aria-label="Close">×</button><h3 id="wTitle">Connect a wallet</h3><div id="wList"></div></div></div>
+<div class="modal" id="pModal" hidden><div class="mbox prog" role="dialog" aria-modal="true" aria-labelledby="pTitle"><button class="x" id="pClose" type="button" aria-label="Close">×</button><img src="/img/toaster.png" alt="" class="p-toaster"><h3 id="pTitle">Toasting…</h3><div class="pbar"><i id="pFill"></i></div><p class="p-line" id="pLine"></p><p class="p-sol" id="pSol"></p><div class="p-links" id="pLinks"></div><div class="p-act" id="pAct"></div></div></div>
+<div class="toast-msg" id="msg" role="status" aria-live="polite"></div>
+<script src="/js/toast.js?v=1" defer></script>
+</body>
+</html>
