@@ -170,8 +170,9 @@ async function scan(ownerStr) {
   const held = [...new Set(accts.filter(a => a.amount !== '0' && !a.native).map(a => a.mint))];
   const [{ map: mk, failed }, usd] = await Promise.all([market(held), solUsd()]);
   // names for coins with no pair left, and for empty accounts (so you can see what you already sold)
-  const allMints = [...new Set(accts.filter(a => !a.native).map(a => a.mint))];
-  const unnamed = allMints.filter(m => !mk[m] || !mk[m].name).slice(0, 400);
+  const emptyMints = accts.filter(a => !a.native && a.amount === '0').map(a => a.mint);
+  const wanted = [...new Set(held.concat(emptyMints.length <= 240 ? emptyMints : []))];
+  const unnamed = wanted.filter(m => !mk[m] || !mk[m].name).slice(0, 300);
   const t22set = new Set(accts.filter(a => a.program === '2022').map(a => a.mint));
   const nm = await names(unnamed.filter(m => t22set.has(m)), unnamed.filter(m => !t22set.has(m))).catch(() => ({}));
   const out = accts.map(a => {
