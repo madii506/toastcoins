@@ -110,13 +110,14 @@
     if (!isAddr(addr)) { say('That doesn’t look like a Solana address.'); $('#addr').focus(); return; }
     if (S.busy) return; S.busy = true;
     const btn = $('#scanBtn'); btn.classList.add('busy'); btn.disabled = true; btn.firstElementChild.textContent = 'Scanning';
+    const slow = setTimeout(() => { btn.firstElementChild.textContent = 'Still reading'; say('Big wallet. Reading every account…', 5000); }, 4500);
     try {
       const d = await api('scan?owner=' + encodeURIComponent(addr));
       S.data = d; S.showAll = {}; $('#addr').value = addr; defaults(); render();
       $('#results').hidden = false;
       setTimeout(() => $('#results').scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
     } catch (e) { say(e.message || 'Scan failed', 4200); }
-    finally { S.busy = false; btn.classList.remove('busy'); btn.disabled = false; btn.firstElementChild.textContent = 'Scan wallet'; }
+    finally { clearTimeout(slow); S.busy = false; btn.classList.remove('busy'); btn.disabled = false; btn.firstElementChild.textContent = 'Scan wallet'; }
   }
   $('#scanForm').addEventListener('submit', e => { e.preventDefault(); const v = $('#addr').value.trim(); if (!v && W.acct) return scan(W.acct.address); scan(v); });
   $('#useWallet').addEventListener('click', () => { if (W.acct) scan(W.acct.address); else connect(() => scan(W.acct.address)); });
